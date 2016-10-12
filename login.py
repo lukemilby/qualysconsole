@@ -4,16 +4,13 @@ from lxml import objectify
 from termcolor import colored
 from lxml.builder import E
 
-# set logging level
-#logging.basicConfig(level=logging.DEBUG)
-# Auth
+
+# Connect
 a = qualysapi.connect("config")
-#logger = logging.getLogger('qualysapi.connector')
-#logger.setLevel(logging.DEBUG)
-#print a.request('about.php')
-#print a.request('api/2.0/fo/asset/host/', {'action': 'list', 'ips':'64.41.200.231'})
 
 
+# Session Management => Logout
+# Not working
 def logout():
     print "Logging out"
     print a.request('api/2.0/fo/session/', {'action':'logout'})
@@ -22,12 +19,13 @@ def logout():
 
 
 def resourceList():
-    print  a.request('api/2.0/fo/report/', {'action':'list'})
+    print a.request('api/2.0/fo/report/', {'action':'list'})
 
 
 def vmScan(peram):
     if peram == 'list':
         print a.request('api/2.0/fo/scan', {'action':'list'})
+
 
 def hosts():
     call = '/api/2.0/fo/asset/host'
