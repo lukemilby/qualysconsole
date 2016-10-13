@@ -20,6 +20,7 @@ class qConsole(cmd.Cmd):
     """ Drop in to Q shell """
 
     level = ''
+    mods = ''
 
     prompt = colored("Qconsole:> ", 'green')
 
@@ -28,19 +29,21 @@ class qConsole(cmd.Cmd):
 
     # Creating a use command to set the mod you want to select
     def do_use(self, line):
-        if line == "vm":
-            qConsole.level = "VM"
-            self.prompt = qConsole.prompt + colored('VM > ', 'yellow')
-        elif line == "was":
-            qConsole.level = "WAS"
-            self.prompt = qConsole.prompt + colored('WAS > ', 'yellow')
-        elif line == "am":
-            qConsole.level = "AM"
-            self.prompt = qConsole.prompt + colored('AM > ', 'yellow')
-        elif line == "scan" and qConsole.level == "VM":
-            qConsole.level = "VM Scan"
-            self.prompt = qConsole.prompt + colored('VM Scan >', 'yellow')
-
+        if str(line).lower() in qopt:
+            qConsole.level = str(line).upper()
+            self.prompt = qConsole.prompt + colored('{} > ', 'yellow').format(str(line).upper())
+        elif str(line).lower() in vmopt and qConsole.level == "VM":
+            qConsole.level = str(line).upper()
+            qConsole.mods = str(line).lower()
+            self.prompt = qConsole.prompt + colored('{} > ', 'yellow').format(str(line).upper())
+        elif str(line).lower() in wasopt and qConsole.level == "VM":
+            qConsole.level = str(line).upper()
+            qConsole.mods = str(line).lower()
+            self.prompt = qConsole.prompt + colored('{} > ', 'yellow').format(str(line).upper())
+        elif str(line).lower() in amopt and qConsole.level == "VM":
+            qConsole.level = str(line).upper()
+            qConsole.mods = str(line).lower()
+            self.prompt = qConsole.prompt + colored('{} > ', 'yellow').format(str(line).upper())
 
     def complete_use(self, text, line, begidx, endidx):
         if qConsole.level == "VM":
