@@ -12,6 +12,7 @@ req = qualysapi.connect('config')
 # TODO:
 #   Def each function in the API docs
 #       List Data
+#           List information in to objects?
 #       Format Date
 #
 
@@ -30,4 +31,4 @@ def listHosts():
     print tabulate(table, headers, tablefmt='fancy_grid')
 
 
-
+def

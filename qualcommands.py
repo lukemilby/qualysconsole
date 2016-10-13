@@ -5,7 +5,14 @@ import cmd
 import VMapi
 from termcolor import colored
 
+# TODO:
+#   Move from CMD to CMD2
+#   Boiler for commands
+#
 
+vmopt = ['Asset', 'Scan', 'Report', 'Compliance' , 'IPv6 Asset', 'Scan Authentication','Network']
+wasopt = ['Web Application','Authentication','Scan','Schedule','Report', 'Report Creation', 'Option Profile', 'Finding', 'Progressive']
+amopt = ['Tag', 'Host Asset', 'Asset', 'Host Instance Vulnerability', 'Asset Data Connector', 'AWS Asset Data Connector', 'AWS Authentication Record']
 
 class qConsole(cmd.Cmd):
     """ Drop in to Q shell """
@@ -27,11 +34,31 @@ class qConsole(cmd.Cmd):
 
     # Runs listHosts form VMapi
     def do_hosts(self,line):
-        if qConsole.level == "VM":
+        if qConsole.level == "asset":
             VMapi.listHosts()
 
-# TODO:
-#   Move from CMD to CMD2
-#   Boiler for commands
-#
+
+    def do_scan(self,line):
+        if qConsole.level == "VM":
+            qConsole.level = "VM Scan"
+            self.prompt = qConsole.prompt + colored('VM Scan > ', 'yellow')
+
+
+    def do_asset(self,line):
+        if qConsole.level == "VM":
+            qConsole.level = "Asset"
+            self.prompt = qConsole.prompt + colored('Assets > ', 'yellow')
+
+
+    def do_help(self, line):
+        pass
+
+    def do_options(self,line):
+        if qConsole.level = ''
+
+        pass
+
+    def do_quit(self,line):
+        pass
+
 
