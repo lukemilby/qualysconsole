@@ -34,7 +34,7 @@ class qConsole(cmd.Cmd):
 
     # Runs listHosts form VMapi
     def do_hosts(self,line):
-        if qConsole.level == "asset":
+        if qConsole.level == "Asset":
             VMapi.listHosts()
 
 
@@ -54,8 +54,7 @@ class qConsole(cmd.Cmd):
         pass
 
     def do_options(self,line):
-        if qConsole.level = ''
-
+        #if qConsole.level == '':
         pass
 
     def do_quit(self,line):

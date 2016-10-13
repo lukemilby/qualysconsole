@@ -31,4 +31,3 @@ def listHosts():
     print tabulate(table, headers, tablefmt='fancy_grid')
 
 
-def
