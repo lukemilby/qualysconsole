@@ -10,9 +10,11 @@ from termcolor import colored
 #   Boiler for commands
 #
 
-vmopt = ['Asset', 'Scan', 'Report', 'Compliance' , 'IPv6 Asset', 'Scan Authentication','Network']
-wasopt = ['Web Application','Authentication','Scan','Schedule','Report', 'Report Creation', 'Option Profile', 'Finding', 'Progressive']
-amopt = ['Tag', 'Host Asset', 'Asset', 'Host Instance Vulnerability', 'Asset Data Connector', 'AWS Asset Data Connector', 'AWS Authentication Record']
+vmopt = ['asset', 'scan', 'report', 'compliance' , 'IPv6 Asset', 'scan authentication','network']
+wasopt = ['web application','authentication','scan','schedule','report', 'report creation', 'option profile', 'finding', 'progressive']
+amopt = ['tag', 'host asset', 'asset', 'host instance vulnerability', 'asset data connector', 'AWS Asset Data Connector', 'AWS Authentication Record']
+qopt = ['vm', 'was', 'am']
+
 
 class qConsole(cmd.Cmd):
     """ Drop in to Q shell """
@@ -24,56 +26,44 @@ class qConsole(cmd.Cmd):
     def emptyline(self):
         pass
 
-    def complete_emptyline(self, text, line, begidx, endidx):
+    # Creating a use command to set the mod you want to select
+    def do_use(self, line):
+        if line == "vm":
+            qConsole.level = "VM"
+            self.prompt = qConsole.prompt + colored('VM > ', 'yellow')
+        elif line == "was":
+            qConsole.level = "WAS"
+            self.prompt = qConsole.prompt + colored('WAS > ', 'yellow')
+        elif line == "am":
+            qConsole.level = "AM"
+            self.prompt = qConsole.prompt + colored('AM > ', 'yellow')
+        elif line == "scan" and qConsole.level == "VM":
+            qConsole.level = "VM Scan"
+            self.prompt = qConsole.prompt + colored('VM Scan >', 'yellow')
+
+
+    def complete_use(self, text, line, begidx, endidx):
         if qConsole.level == "VM":
             return [i for i in vmopt if i.startswith(text)]
         elif qConsole.level == "WAS":
             return [i for i in wasopt if i.startswith(text)]
         elif qConsole.level == "AM":
             return [i for i in amopt if i.startswith(text)]
+        else:
+            return [i for i in qopt if i.startswith(text)]
 
-
-
-    # Creating a use command to set the mod you want to select
-    def do_use(self, line):
-        #if mod == "vm":
-        pass
-
-    # Workaround till I get do_use working
-    # Key to move in the Vulnerability Managment
-    def do_vm(self, line):
-        qConsole.level = "VM"
-        self.prompt = qConsole.prompt + colored('VM > ', 'yellow')
-
-    # Key to move in to Web Application Scanning
-    def do_was(self,line):
-        qConsole.level = "WAS"
-        self.prompt = qConsole.prompt + colored('WAS > ', 'yellow')
-
-    # Key to move in to Asset Management
-    def do_am(self,line):
-        qConsole.level = "AM"
-        self.prompt = qConsole.prompt + colored('AM > ', 'yellow')
 
     # Runs listHosts form VMapi
     def do_hosts(self,line):
         if qConsole.level == "Asset":
             VMapi.listHosts()
 
-
-    # VM:VM Scan
-    # Move user in to Scan level of Vuln Management
-    def do_scan(self,line):
-        if qConsole.level == "VM":
-            qConsole.level = "VM Scan"
-            self.prompt = qConsole.prompt + colored('VM Scan > ', 'yellow')
-
     # VM:Asset
     # Moves user in to Asset level of Vuln Management
     def do_asset(self,line):
         if qConsole.level == "VM":
             qConsole.level = "Asset"
-            self.prompt = qConsole.prompt + colored('Assets > ', 'yellow')
+            self.prompt = qConsole.prompt + colored('Asset > ', 'yellow')
 
 
     def do_help(self, line):

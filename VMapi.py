@@ -31,3 +31,10 @@ def listHosts():
     print tabulate(table, headers, tablefmt='fancy_grid')
 
 
+def scan():
+    pass
+
+
+def report():
+    pass
+
